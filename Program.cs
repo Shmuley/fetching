@@ -1,54 +1,36 @@
-﻿using System.Text;
-using Fetch.Models;
+﻿using Fetching.Models;
+using Fetching.Parsers;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private async static Task Main(string[] args)
     {
-        var timeout = new TimeSpan(0, 0, 0, 0, 500).TotalMilliseconds;
+        int pollInterval = 15;
+
+        var filePath = CliInputParser.ParseInputArgs(args);
+        var file = new StreamReader(filePath).ReadToEnd();
+
+        var pollIntervalSpan = new TimeSpan(0, 0, pollInterval);
         var client = new HttpClient();
-        var file = new StreamReader("./input.yaml").ReadToEnd();
 
         var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(LowerCaseNamingConvention.Instance)
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
 
-        var endpoints = deserializer.Deserialize<List<FetchConfig>>(file);
+        List<EndpointTracker> trackers = EndpointTracker.FromList(
+            deserializer.Deserialize<List<FetchingConfig>>(file));
+        
+        List<HostnameTracker> hostnameTrackers = HostnameTracker.FromList(trackers);
 
-        foreach (var endpoint in endpoints)
+        while (true)
         {
-            var method = !string.IsNullOrEmpty(endpoint.Method) ? new HttpMethod(endpoint.Method) : HttpMethod.Get;
-            var req = new HttpRequestMessage(method, endpoint.Url);
-
-
-            if (endpoint.Headers != null)
+            foreach( var hostnameTracker in hostnameTrackers)
             {
-                foreach (var header in endpoint.Headers)
-                {
-                    if (header.Key == "content-type" && !string.IsNullOrEmpty(endpoint.Body))
-                    {
-                        req.Content = new StringContent(endpoint.Body, Encoding.UTF8, header.Value);
-                    }
-                    else
-                    {
-                        req.Headers.Add(header.Key, header.Value);
-                    }
-                }
-            }
-
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            var response = client.Send(req);
-            watch.Stop();
-            if (response.IsSuccessStatusCode && watch.ElapsedMilliseconds < timeout)
-            {
-                Console.WriteLine($"UP : {watch.ElapsedMilliseconds}");
-            }
-            else
-            {
-                Console.WriteLine($"DOWN : {watch.ElapsedMilliseconds}");
-            }
-        };
+                await hostnameTracker.TrackHostnameAsync(client);
+            };
+            Thread.Sleep(pollIntervalSpan);
+        }
     }
 }
