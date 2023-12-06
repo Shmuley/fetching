@@ -9,9 +9,15 @@ All of the step here take place in the root of the repository unless otherwise s
 - Install the SDK
   - You will need to install .NET 8 SDK. Microsoft has a decent guide for installing on any OS, you can find that [here](https://dotnet.microsoft.com/en-us/download)
 - Build the application
-  - In the root of the repo, run ```dotnet build fetching.csproj -c Release -o build```
+  - In the root of the repo, run:
+    ```bash
+    dotnet build fetching.csproj -c Release -o build
+    ```
 - Run the application
-  - You will need to pass the application a valid YAML file as so ```dotnet ./build/fetching.dll <your-yaml-file>```
+  - You will need to pass the application a valid YAML file as so:
+    ```bash
+    dotnet ./build/fetching.dll <your-yaml-file>
+    ```
 
 ### Using Docker
 
@@ -20,9 +26,14 @@ If you prefer to use docker instead of installing the dotnet SDK, you can follow
 - Install Docker
   - Honestly, if you don't already have Docker installed I'd recommend following the dotnet SDK based instructions above, but if you wish to proceed, instructions for installing can be followed [here](https://docs.docker.com/engine/install/)
 - Build the container
-  - ```docker build -t fetching .```
+  ```bash
+  docker build -t fetching .
+  ```
 - Run the container
-  - You will need to mount your yaml file in the docker container for this to work, you can do that using the following command: ```docker run -v <full-path-to-yaml-file>:/app/input.yaml --rm fetching:latest input.yaml```
+  - You will need to mount your yaml file in the docker container for this to work, you can do that using the following command: 
+    ```bash
+    docker run -v <full-path-to-yaml-file>:/app/input.yaml --rm fetching:latest input.yaml
+    ```
 
 ## Additional Features
 
