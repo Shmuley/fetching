@@ -1,51 +1,51 @@
 namespace Fetching.Models
 {
-    public class HostnameTracker
+    public class HostnamePolling
     {
-        public HostnameTracker(string hostname, List<EndpointTracker> trackers)
+        public HostnamePolling(string hostname, List<EndpointPolling> trackers)
         {
             Hostname = hostname;
-            Trackers = trackers;
+            EndpointPollers = trackers;
             Up = 0;
             Down = 0;
 
         }
         public string Hostname { get; set; }
-        public List<EndpointTracker> Trackers { get; set; }
+        public List<EndpointPolling> EndpointPollers { get; set; }
 
         public double Up { get; set; }
         public double Down { get; set; }
 
-        public static List<HostnameTracker> FromList(List<EndpointTracker> trackers)
+        public static List<HostnamePolling> FromList(List<EndpointPolling> endpointPollers)
         {
-            List<HostnameTracker> hostnameTrackers = new();
-            var hostnames = trackers.GroupBy(t => t.FetchConfig.Url.Host).ToList();
+            List<HostnamePolling> hostnamePollers = new();
+            var hostnames = endpointPollers.GroupBy(t => t.FetchConfig.Url.Host).ToList();
 
             foreach (var host in hostnames)
             {
-                hostnameTrackers.Add(new HostnameTracker(host.Key, host.ToList()));
+                hostnamePollers.Add(new HostnamePolling(host.Key, host.ToList()));
             }
 
-            return hostnameTrackers;
+            return hostnamePollers;
         }
 
-        public HostnameTracker AddUp()
+        public HostnamePolling AddUp()
         {
             Up++;
             return this;
         }
 
-        public HostnameTracker AddDown()
+        public HostnamePolling AddDown()
         {
             Down++;
             return this;
         }
 
-        public async Task TrackHostnameAsync(HttpClient client)
+        public async Task PollHostnameAsync(HttpClient client)
         {
-            foreach (var tracker in Trackers)
+            foreach (var tracker in EndpointPollers)
             {
-                if (await tracker.TrackEndpointAsync(client))
+                if (await tracker.PollEndpointAsync(client))
                 { 
                     AddUp();
                 }

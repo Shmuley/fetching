@@ -3,13 +3,14 @@
 {
 	"name": "C# (.NET)",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/dotnet:1-6.0",
+	"image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0",
 	"remoteUser": "vscode",
 	"containerUser": "vscode",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	}

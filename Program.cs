@@ -19,16 +19,16 @@ internal class Program
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
 
-        List<EndpointTracker> trackers = EndpointTracker.FromList(
-            deserializer.Deserialize<List<FetchingConfig>>(file));
+        List<EndpointPolling> endpointPolling = EndpointPolling.FromList(
+            deserializer.Deserialize<List<EndpointConfig>>(file));
         
-        List<HostnameTracker> hostnameTrackers = HostnameTracker.FromList(trackers);
+        List<HostnamePolling> hostnamePolling = HostnamePolling.FromList(endpointPolling);
 
         while (true)
         {
-            foreach( var hostnameTracker in hostnameTrackers)
+            foreach( var hostnamePoll in hostnamePolling)
             {
-                await hostnameTracker.TrackHostnameAsync(client);
+                await hostnamePoll.PollHostnameAsync(client);
             };
             Thread.Sleep(pollIntervalSpan);
         }

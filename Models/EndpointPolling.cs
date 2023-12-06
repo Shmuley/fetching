@@ -3,41 +3,40 @@ using System.Text;
 
 namespace Fetching.Models
 {
-    public class EndpointTracker
+    public class EndpointPolling
     {
-        public EndpointTracker(FetchingConfig config)
+        public EndpointPolling(EndpointConfig config)
         {
             FetchConfig = config;
             Up = 0;
             Down = 0;
         }
 
-        public FetchingConfig FetchConfig { get; private set; }
+        public EndpointConfig FetchConfig { get; private set; }
 
         public double Up { get; private set; }
         public double Down { get; private set; }
 
-        public static List<EndpointTracker> FromList(List<FetchingConfig> configs)
+        public static List<EndpointPolling> FromList(List<EndpointConfig> configs)
         {
-            List<EndpointTracker> trackers = new();
+            List<EndpointPolling> trackers = new();
             foreach (var config in configs)
             {
-                trackers.Add(new EndpointTracker(config));
+                trackers.Add(new EndpointPolling(config));
             }
 
             return trackers;
         }
 
-        public async Task<bool> TrackEndpointAsync(HttpClient client)
+        public async Task<bool> PollEndpointAsync(HttpClient client)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var response = await client.SendAsync(BuildRequestMessage());
             watch.Stop();
-            if (response.IsSuccessStatusCode && watch.ElapsedMilliseconds < FetchConfig.LatencyTimeout)
+            if (response.IsSuccessStatusCode && watch.ElapsedMilliseconds < FetchConfig.LatencyThreshold)
             {
                 AddUp();
                 return true;
-
             }
             else
             {
@@ -70,16 +69,20 @@ namespace Fetching.Models
             return request;
         }
 
-        public EndpointTracker AddUp()
+        public EndpointPolling AddUp()
         {
             Up++;
             return this;
         }
 
-        public EndpointTracker AddDown()
+        public EndpointPolling AddDown()
         {
             Down++;
             return this;
+        }
+        public string GetAvailability()
+        {
+            return $"{FetchConfig.Url} has {Math.Round(Up / (Up + Down) * 100)}% availability percentage";
         }
     }
 }
