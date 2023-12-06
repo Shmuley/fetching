@@ -1,3 +1,4 @@
+using System.Text;
 using Fetching.Service.Models;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -16,6 +17,7 @@ public class Tests
               method: GET
               name: fetch.com index page
               url: https://fetch.com/
+              latencyThreshold: 200
             - headers:
                 user-agent: fetch-synthetic-monitor
               method: GET
@@ -43,6 +45,13 @@ public class Tests
         Assert.True(parsedConfig.Count == 4);
         Assert.True(endpoints.Count == 4);
         Assert.True(hostnames.Count == 2);
+
+        // Test that our latency override is in fact working and only applying to the one endpoint
+        Assert.True(endpoints.First(e => e.FetchConfig.Name == "fetch.com index page")
+        .FetchConfig.LatencyThreshold == 200);
+
+        Assert.True(endpoints.First(e => e.FetchConfig.Name == "fetch.com some post endpoint")
+        .FetchConfig.LatencyThreshold == 500);
     }
 
     [Fact]
