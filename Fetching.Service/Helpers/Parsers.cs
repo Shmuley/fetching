@@ -1,4 +1,4 @@
-namespace Fetching.Parsers
+namespace Fetching.Service.Parsers
 {
     public static class CliInputParser
     {

@@ -1,7 +1,6 @@
-using System.Net;
 using System.Text;
 
-namespace Fetching.Models
+namespace Fetching.Service.Models
 {
     public class EndpointPolling
     {

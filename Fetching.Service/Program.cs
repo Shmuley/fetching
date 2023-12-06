@@ -1,5 +1,5 @@
-﻿using Fetching.Models;
-using Fetching.Parsers;
+﻿using Fetching.Service.Models;
+using Fetching.Service.Parsers;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 

@@ -9,15 +9,17 @@ All of the step here take place in the root of the repository unless otherwise s
 - Install the SDK
   - You will need to install .NET 8 SDK. Microsoft has a decent guide for installing on any OS, you can find that [here](https://dotnet.microsoft.com/en-us/download)
 - Build the application
-  - In the root of the repo, run:
-    ```bash
-    dotnet build fetching.csproj -c Release -o build
-    ```
-- Run the application
-  - You will need to pass the application a valid YAML file as so:
-    ```bash
-    dotnet ./build/fetching.dll <your-yaml-file>
-    ```
+  ```bash
+  dotnet build Fetching.Service/Fetching.Service.csproj -c Release -o build
+  ```
+- Run the tests
+  ```
+  dotnet test
+  ```
+- Run the application, you will need to pass the application a valid YAML file as so:
+  ```bash
+  dotnet ./build/Fetching.Service.dll <path-to-your-yaml-file>
+  ```
 
 ### Using Docker
 

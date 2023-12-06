@@ -1,4 +1,4 @@
-namespace Fetching.Models
+namespace Fetching.Service.Models
 {
     public class HostnamePolling
     {

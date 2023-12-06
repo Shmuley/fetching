@@ -2,7 +2,9 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fetching", "fetching.csproj", "{3116A997-1AFC-43C8-9611-D888847F10EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fetching.Service", "Fetching.Service\Fetching.Service.csproj", "{3116A997-1AFC-43C8-9611-D888847F10EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fetching.Tests", "Fetching.Tests\Fetching.Tests.csproj", "{8A2D5016-54B9-44AA-8130-36A297F1F69B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{3116A997-1AFC-43C8-9611-D888847F10EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3116A997-1AFC-43C8-9611-D888847F10EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3116A997-1AFC-43C8-9611-D888847F10EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2D5016-54B9-44AA-8130-36A297F1F69B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2D5016-54B9-44AA-8130-36A297F1F69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2D5016-54B9-44AA-8130-36A297F1F69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2D5016-54B9-44AA-8130-36A297F1F69B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
