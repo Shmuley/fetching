@@ -1,6 +1,6 @@
 ## Building and Running
 
-You can do this one of two ways:
+You can do this one of two ways, either downloading and installing the dotnet 8 SDK, or downloading and installing Docker. I primarily work from a linux machine and use VS Code, so you may notice there is a ```.devcontainer``` folder, which can be used to setup the project in VS Code and build from within a container. However, that requires you also install VS Code _as well_ as Docker, and that seems like a lot to ask, so I'm leaving those instructions out here but recommend you [check it out](https://code.visualstudio.com/docs/devcontainers/containers) if that seems cool to you.
 
 ### Install Dotnet SDK
 
@@ -52,7 +52,7 @@ During testing I would often wonder if my availability calculation was actually 
 ```
 
 ### Endpoint Tracking
-This was honestley a mistake, I misunderstood the instructions at first and was tracking each FQDN instead of aggregating by hostname, so I built in UP and DOWN tracking for each ```EndpointPolling``` object. This means if you wanted to extend this app to track the avaialbility of individual endpoints, the data is already there, and can be accessed like so
+This was honestley a mistake, I misunderstood the instructions at first and was tracking each full URL instead of aggregating by hostname, so I built in UP and DOWN tracking for each ```EndpointPolling``` object. This means if you wanted to extend this app to track the avaialbility of individual endpoints, the data is already being tracked, and can be accessed like so
 ```csharp
 // Program.cs
 
