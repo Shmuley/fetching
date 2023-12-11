@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Fetching.Service.Models
 {
     public class EndpointPolling
@@ -44,28 +42,13 @@ namespace Fetching.Service.Models
             }
         }
 
-        public HttpRequestMessage BuildRequestMessage()
+        internal HttpRequestMessage BuildRequestMessage()
         {
             // Parse http method, if null then set to GET
             var method = !string.IsNullOrEmpty(FetchConfig.Method) ? new HttpMethod(FetchConfig.Method) : HttpMethod.Get;
             var request = new HttpRequestMessage(method, FetchConfig.Url);
 
-            if (null != FetchConfig.Headers)
-            {
-                foreach (var header in FetchConfig.Headers)
-                {
-                    if (header.Key == "content-type" && method == HttpMethod.Post)
-                    {
-                        request.Content = new StringContent(FetchConfig.Body ?? "{}", Encoding.UTF8, header.Value);
-                    }
-                    else
-                    {
-                        request.Headers.Add(header.Key, header.Value);
-                    }
-                }
-            }
-
-            return request;
+            return Parsers.FetchingParsers.ParseHttpHeaders(request, FetchConfig);
         }
 
         public EndpointPolling AddUp()

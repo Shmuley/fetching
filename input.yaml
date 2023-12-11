@@ -17,3 +17,57 @@
   url: https://fetch.com/some/post/endpoint
 - name: www.fetchrewards.com index page
   url: https://www.fetchrewards.com/
+- headers:
+    user-agent: fetch-synthetic-monitor
+  method: GET
+  name: fetch.com index page
+  url: https://fetch.com/
+  latencyThreshold: 200
+- headers:
+    user-agent: fetch-synthetic-monitor
+  method: GET
+  name: fetch.com careers page
+  url: https://fetch.com/careers
+- body: '{""foo"":""bar""}'
+  headers:
+      content-type: application/json
+      user-agent: fetch-synthetic-monitor
+  method: POST
+  name: fetch.com some post endpoint
+  url: https://fetch.com/some/post/endpoint
+- name: www.fetchrewards.com index page
+  url: https://www.fetchrewards.com/ 
+- body: '{""foo"":""bar""}'
+  headers:
+      content-type: application/json
+      user-agent: fetch-synthetic-monitor
+      # Worth pointing out: this is NOT a real bearer token
+      authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva
+  method: PUT
+  name: fetch.com some PUT endpoint
+  url: https://fetch.com/some/put/endpoint
+- body: '{""foo"":""bar""}'
+  headers:
+      user-agent: fetch-synthetic-monitor
+  method: PATCH
+  name: fetch.com some patch endpoint
+  url: https://fetch.com/some/patch/endpoint
+- method: POST
+  headers:
+      content-type: application/json
+      user-agent: fetch-synthetic-monitor
+  name: fetch.com some post wo body endpoint
+  url: https://fetch.com/some/post/endpoint
+- method: POST
+  name: fetch.com some post wo body or headers endpoint
+  url: https://fetch.com/some/post/endpoint
+- body: '{""foo"":""bar""}'
+  headers:
+      content-type: application/json
+      user-agent: fetch-synthetic-monitor
+  name: fetch.com some get w body and content-type endpoint
+  url: https://fetch.com/
+- body: '{""foo"":""bar""}'
+  method: POST
+  name: fetch.com some post wo headers endpoint
+  url: https://fetch.com/some/post/endpoint

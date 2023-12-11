@@ -8,11 +8,11 @@ internal class Program
     private async static Task Main(string[] args)
     {
         int pollInterval = 15;
+        var pollIntervalSpan = new TimeSpan(0, 0, pollInterval);
 
-        var filePath = CliInputParser.ParseInputArgs(args);
+        var filePath = FetchingParsers.ParseInputArgs(args);
         var file = new StreamReader(filePath).ReadToEnd();
 
-        var pollIntervalSpan = new TimeSpan(0, 0, pollInterval);
         var client = new HttpClient();
 
         var deserializer = new DeserializerBuilder()
